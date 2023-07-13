@@ -34,6 +34,8 @@ import {
 // import { useHackCw20Balance } from '../hooks/use-hack-cw20-balance';
 import { useHackCw721Base } from '../hooks/use-hack-cw721';
 import { MintNfts } from '../components/mint_nft';
+import { GenPicture } from '../components/gen_picture';
+import { UploadImage } from '../components/upload_image';
 
 const library = {
   title: 'OsmoJS',
@@ -92,17 +94,20 @@ export default function Home() {
       </Box>
 
       <WalletSection />
+      <GenPicture/>
+      <UploadImage/>
+      <MintNfts/>
 
-      <Box w="full" maxW="md" mx="auto">
+      {/* <Box w="full" maxW="md" mx="auto">
         <HackCw20
           balance={balance}
           isConnectWallet={status !== WalletStatus.Disconnected}
         />
       </Box>
 
-      <Box>
+      <Box w="full" maxW="md" mx="auto">
               <MintNfts/>
-      </Box>
+      </Box> */}
 
   
 

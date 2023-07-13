@@ -4294,10 +4294,10 @@ chai@^4.3.7:
     pathval "^1.1.1"
     type-detect "^4.0.5"
 
-chain-registry@1.14.0:
-  version "1.14.0"
-  resolved "https://registry.npmjs.org/chain-registry/-/chain-registry-1.14.0.tgz#874f7c4d416b5122f25d7d8e89e22368074bef1b"
-  integrity sha512-j5PgLP8coJ4uIUtpd2fXTLa3ass2ahbx35+g6eLquDZpIg/0Sr7SKX7M2/0jnaT7ohHKnRLMJxOnBHaDpuotoQ==
+chain-registry@1.16.0:
+  version "1.16.0"
+  resolved "https://registry.npmmirror.com/chain-registry/-/chain-registry-1.16.0.tgz#89b5422eaddae9e6137e344965fec51974196bb4"
+  integrity sha512-Qe0+sS5bSs3gMAkuYhJczSmbo6KHBdldOePNNxR+vroq21/PeyDDoQnuJNQH5NCYCLQnswUk31gO3XtkBhaZXA==
   dependencies:
     "@babel/runtime" "^7.21.0"
     "@chain-registry/types" "^0.16.0"
