@@ -22,7 +22,6 @@ import {
   
 //   import ConnectWalletButton from '../wallets/ConnectWalletButton';
   import CopyAddressButton from './CopyAddressButton';
-  import { GenTask } from '../components/gen_task';
   
   type IconTypeProps = string | IconType | JSX.Element | React.ReactNode | any;
   type DefaultLinkItemType = {
@@ -349,6 +348,20 @@ import {
               '&::-webkit-scrollbar': {
                 width: '10px',
                 background: 'transparent'
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: handleChangeColorModeValue(
+                  colorMode,
+                  'rgba(0,0,0,0.1)',
+                  'rgba(255,255,255,0.1)'
+                ),
+                borderRadius: '6px',
+                border: '3px solid',
+                borderColor: handleChangeColorModeValue(
+                  colorMode,
+                  '#fff',
+                  '#1A202C'
+                )
               }
             }}
           >
@@ -502,25 +515,33 @@ import {
     );
     const linkItems = [
       {
-        label: '⚡️ Prompt to Task',
-        href: 'http://localhost:3000'
+        label: '⚡️ Create Cosmos App',
+        href: 'https://github.com/cosmology-tech/create-cosmos-app'
       },
       {
-        label: '🔧 Task to Image',
-        href: 'http://localhost:3000/gen_picture'
+        label: '🔧 Cosmos Kit',
+        href: 'https://github.com/cosmology-tech/cosmos-kit'
       },
       {
-        label: '🔨 Upload to Ipfs',
-        href: 'http://localhost:3000/upload_ipfs'
+        label: '🔨 OsmoJS',
+        href: 'https://github.com/osmosis-labs/osmojs'
       },
       {
-        label: '🔭 Mint Nft',
-        href: 'http://localhost:3000/mint_nft'
+        label: '🔭 Telescope',
+        href: 'https://github.com/osmosis-labs/telescope'
       },
       {
-        label: '🌱 Display Nft',
-        href: 'http://localhost:3000/display_nfts'
+        label: '🌱 TS Codegen',
+        href: 'https://github.com/CosmWasm/ts-codegen'
       },
+      {
+        label: '🪐 Cosmology',
+        href: 'https://github.com/cosmology-tech/cosmology'
+      },
+      {
+        label: '✏️ Chain Registry',
+        href: 'https://github.com/cosmology-tech/chain-registry'
+      }
     ];
   
     return (
@@ -531,9 +552,8 @@ import {
           copyAddressButton={<CopyAddressButton />}
           isFullWidth={false}
         >
-          <Box>
+          <Box mx="auto" w="full" maxW={56} py={16}>
             {/* <ConnectWalletButton /> */}
-            <GenTask/>
           </Box>
         </SimpleLayout>
       </Box>

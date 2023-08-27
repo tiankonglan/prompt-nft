@@ -21,8 +21,9 @@ import {
   import { FiChevronLeft, FiMenu, FiMoon, FiSun } from 'react-icons/fi';
   
 //   import ConnectWalletButton from '../wallets/ConnectWalletButton';
-  import CopyAddressButton from './CopyAddressButton';
-  import { GenTask } from '../components/gen_task';
+import CopyAddressButton from './CopyAddressButton';
+import { GenPicture } from '../components/gen_picture';
+import { UploadImage } from '../components/upload_image';
   
   type IconTypeProps = string | IconType | JSX.Element | React.ReactNode | any;
   type DefaultLinkItemType = {
@@ -503,7 +504,7 @@ import {
     const linkItems = [
       {
         label: '⚡️ Prompt to Task',
-        href: 'http://localhost:3000'
+        href: 'http://localhost:3000/gen_task'
       },
       {
         label: '🔧 Task to Image',
@@ -533,7 +534,7 @@ import {
         >
           <Box>
             {/* <ConnectWalletButton /> */}
-            <GenTask/>
+            <UploadImage/>
           </Box>
         </SimpleLayout>
       </Box>

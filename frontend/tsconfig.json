@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/mint_nft.tsxbak"  ],
+, "components/mint_nft.tsxbak", "pages/index.tsxbak"  ],
   "exclude": [
     "node_modules"
   ]

@@ -2,16 +2,12 @@ import {
     Flex,
     useColorModeValue,
     Stack,
-    Input,
     Button,
     FormControl,
     FormLabel,
     Text,
     Box,
     Textarea,
-    Card,
-    CardBody,
-    Image,
 } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useChain } from '@cosmos-kit/react';
@@ -20,15 +16,18 @@ import {
 } from '../config';
 import {
   ApiRequest
-} from '../api';  
-
-export const UploadImage = () => {  
-    const [imageUrl, setImageUrl] = useState('');
-    const [ipfsUrl, setIpfsUrl] = useState('');
+} from '../api';
+  
+export const GenTask = () => {  
     const [isLoading, setIsLoading] = useState(true);
+    const [taskId, setTaskId] = useState('');
+    const [prompt, setPrompt] = useState('');
+
     const lightBorderColor = useColorModeValue('#FFF', '#434B55');
 
     const mintBoxRef = useRef<HTMLDivElement>(null);
+
+    const inputAmount = 0;
 
     const {
         address,
@@ -42,26 +41,29 @@ export const UploadImage = () => {
         }
     }, [address]);
 
-    const handleImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setImageUrl(event.target.value);
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setPrompt(event.target.value);
     }
 
-    const handleUploadClick = async (imageUrl :string) => {
-      const uri = "/api/v1/nft?image_url=" + imageUrl
+    const handleTaskClick = async (prompt : string) => {
+      const uri = "/api/v1/prompt?prompt=" + prompt
       ApiRequest.get(uri)
         .then((data) => {
-          // console.log("data: ", data);
-          console.log("data.image_url: ", data.data.image_url);
-          setIpfsUrl(data.data.image_url);
+          // setPosts(data);
+          console.log("data: ", data);
+          console.log("data.task_id: ", data.data.task_id);
+          setTaskId(data.data.task_id);
+          console.log("taskId: ", taskId);
         })
         .catch((err) => {
+          // setIsError(true);
           console.log("err: ", err);
         });
     }
 
     return (
       <Flex
-        w="816px"
+        w="1024px"
         minH="595px"
         border="1px solid"
         borderColor={lightBorderColor}
@@ -75,18 +77,20 @@ export const UploadImage = () => {
       >
         <Box>
           <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-              <FormControl id="ImageUrl">
-                  <FormLabel>Imageurl</FormLabel>
-                  <Input placeholder='Imageurl'
-                      value={imageUrl}
-                      onChange={handleImageUrlChange}
+              <FormControl id="Prompt">
+                  <FormLabel>Prompt</FormLabel>
+                  <Textarea 
+                    placeholder="Enter text here..."
+                    size="md" 
+                    rows={10}
+                    value={prompt}
+                    onChange={handleChange}
                   />
               </FormControl>
               <Stack spacing={10} pt={2}>
                   <Button
                   onClick={async (e) => {
-                    console.log("taskId: ", imageUrl);
-                    await handleUploadClick(imageUrl);
+                    await handleTaskClick(prompt);
                   }}
                   loadingText="Submitting"
                   size="lg"
@@ -95,12 +99,12 @@ export const UploadImage = () => {
                   _hover={{
                       bg: 'blue.500',
                   }}>
-                  Upload
+                  Create
                   </Button>
               </Stack>
               <Stack spacing={10} pt={2}>
                 <Text  color='tomato'>
-                  IpfsUrl: {ipfsUrl}
+                  TaskId: {taskId}
                 </Text>
               </Stack>
           </Stack>

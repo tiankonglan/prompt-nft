@@ -21,8 +21,8 @@ import {
   import { FiChevronLeft, FiMenu, FiMoon, FiSun } from 'react-icons/fi';
   
 //   import ConnectWalletButton from '../wallets/ConnectWalletButton';
-  import CopyAddressButton from './CopyAddressButton';
-  import { GenTask } from '../components/gen_task';
+import CopyAddressButton from './CopyAddressButton';
+import { GenPicture } from '../components/gen_picture';
   
   type IconTypeProps = string | IconType | JSX.Element | React.ReactNode | any;
   type DefaultLinkItemType = {
@@ -533,7 +533,7 @@ import {
         >
           <Box>
             {/* <ConnectWalletButton /> */}
-            <GenTask/>
+            <GenPicture/>
           </Box>
         </SimpleLayout>
       </Box>

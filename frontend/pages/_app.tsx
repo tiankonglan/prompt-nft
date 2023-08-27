@@ -58,7 +58,7 @@ function CreateCosmosApp({ Component, pageProps }: AppProps) {
         endpointOptions={{
           endpoints: {
             osmosistestnet: {
-              rpc: ['https://testnet-rpc.osmosis.zone/'],
+              rpc: ['https://rpc.osmotest5.osmosis.zone/'],
             },
           },
         }}

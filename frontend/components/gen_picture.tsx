@@ -112,45 +112,8 @@ export const GenPicture = () => {
       >
         <Box>
           <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-              <FormControl id="Prompt">
-                  <FormLabel>Prompt</FormLabel>
-                  <Textarea 
-                    placeholder="Enter text here..."
-                    size="md" 
-                    rows={10}
-                    value={prompt}
-                    onChange={handleChange}
-                  />
-              </FormControl>
-              <Stack spacing={10} pt={2}>
-                  <Button
-                  onClick={async (e) => {
-                    await handleTaskClick(prompt);
-                  }}
-                  loadingText="Submitting"
-                  size="lg"
-                  bg={'blue.400'}
-                  color={'white'}
-                  _hover={{
-                      bg: 'blue.500',
-                  }}>
-                  Create
-                  </Button>
-              </Stack>
-              <Stack spacing={10} pt={2}>
-                <Text  color='tomato'>
-                  TaskId: {taskId}
-                </Text>
-              </Stack>
-          </Stack>
-        </Box>
-        <Box>
-          <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
             <FormControl id="TaskId">
               <FormLabel>TaskId</FormLabel>
-              {/* <Text  color='tomato'>
-                {imageTaskId}
-              </Text> */}
               <Input placeholder='TaskId'
                   value={taskId}
                   onChange={handleTaskIdChange}
@@ -172,11 +135,11 @@ export const GenPicture = () => {
                   Query
                   </Button>
               </Stack>
-              <Stack spacing={10} pt={2}>
+              {/* <Stack spacing={10} pt={2}>
                 <Text  color='tomato'>
                   ImageUrl: {imageUrl}
                 </Text>
-              </Stack>
+              </Stack> */}
           </Stack>
         </Box>
         <Box>
@@ -185,16 +148,16 @@ export const GenPicture = () => {
               <Image
                 // src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
                 src={imageUrl}
-                alt='Green double couch with wooden legs'
+                alt='imagw'
                 borderRadius='lg'
               />
             </CardBody>
           </Card>
-          <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-            <Text  color='tomato'>
-              Url: {imageTaskId}
-            </Text>
-          </Stack>
+          <Stack spacing={10} pt={2}>
+                <Text  color='tomato'>
+                  ImageUrl: {imageUrl}
+                </Text>
+              </Stack>
         </Box>
       </Flex>
     );

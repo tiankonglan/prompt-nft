@@ -13,24 +13,37 @@ import {
   import { useChain } from '@cosmos-kit/react';
   import {
     chainName,
+    cw20ContractAddress
   } from '../config';
   import {
     ApiRequest
   } from '../api';  
+  import { Cw721BaseQueryClient, Cw721BaseClient } from '../codegen/Cw721Base.client';
+  import {Empty} from  '../codegen/Cw721Base.types';
+  import { StdFee } from '@cosmjs/stargate';
+  import BigNumber from 'bignumber.js';
 
+  
   
 export const MintNfts = () => {  
     const [isLoading, setIsLoading] = useState(true);
     const [nftName, setNftName] = useState('');
     const [nftUrl, setNftUrl] = useState('');
     const [nftDescription, setNftDescription] = useState('');
+    const [txHash, setTxHash] = useState('');
 
     const lightBorderColor = useColorModeValue('#FFF', '#434B55');
     const mintBoxRef = useRef<HTMLDivElement>(null);
 
+    const contractAddress = cw20ContractAddress;
+
     const {
-        address,
-      } = useChain(chainName);
+      address,
+      getRpcEndpoint,
+      getCosmWasmClient,
+      getSigningCosmWasmClient,
+    } = useChain(chainName);
+    // console.log("chainName ", chainName)
 
     useEffect(() => {
         if (address) {
@@ -41,31 +54,76 @@ export const MintNfts = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [address]);
 
+    const [cw721BaseClient, setCw721BaseClient] = useState<Cw721BaseClient | null>(
+      null
+    );
+
     const handleNftNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setNftName(event.target.value);
     }
 
     const handleNftDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setNftName(event.target.value);
+      setNftDescription(event.target.value);
     }
 
     const handleNftUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setNftName(event.target.value);
+      setNftUrl(event.target.value);
     }
 
     const handleMintClick = async (nftName :string, nftDescription: string, nftUrl: string) => {
-      const uri = "/api/v1/nft?image_url=" + nftUrl
-      ApiRequest.get(uri)
-        .then((data) => {
-          // setPosts(data);
-          console.log("data: ", data);
-          console.log("data.image_url: ", data.data.image_url);
-          // setIpfsUrl(data.data.image_url);
+      let rpcEndpoint = await getRpcEndpoint();
+      console.log("rpcEndPoint: ", rpcEndpoint);
+      
+      await getSigningCosmWasmClient().then((cosmwasmClient) => {
+        if (!cosmwasmClient || !address) {
+          console.error('cosmwasmClient undefined or address undefined.');
+          return;
+        }
+        console.log(" wasm client set");
+        const client = new Cw721BaseClient(cosmwasmClient, address, contractAddress)
+        setCw721BaseClient(client);
+
+        
+        console.log("client ", cw721BaseClient);
+
+        const tokenId = "123";
+        const obj: Empty = {
+        } as Empty;
+  
+        const objParam = {
+          extension: {
+            "description":nftDescription,
+            "name":nftName,
+          }, 
+          owner: address || "osmo15rvn0l8th4rnpmefmej7lvlw9ucvk7k6tsmy5d",
+          tokenId: nftName,
+          tokenUri: nftUrl 
+        };
+
+        console.log("----- address ---------", address);
+        console.log(" base client ", client);
+
+        const fee: StdFee = {
+          amount: [
+            {
+              denom: 'uosmo',
+              amount: '0',
+            },
+          ],
+          gas: new BigNumber('200000').toString(),
+        };
+
+        client?.mint(objParam, fee).then((ExecuteResult) => {
+          if (!ExecuteResult) {
+            console.error('mint failed');
+            return;
+          }
+          // console.log("mint result : ", ExecuteResult);
+          console.log("mint txHash: ", ExecuteResult.transactionHash);
+          setTxHash(ExecuteResult.transactionHash);
         })
-        .catch((err) => {
-          // setIsError(true);
-          console.log("err: ", err);
-        });
+        
+      });   
     }
 
     return (
@@ -92,14 +150,14 @@ export const MintNfts = () => {
                   />
               </FormControl>
               <FormControl id="NftDescription">
-                  <FormLabel>Nft Name: </FormLabel>
+                  <FormLabel>Nft Description: </FormLabel>
                   <Input placeholder='Nft Description'
                       value={nftDescription}
                       onChange={handleNftDescriptionChange}
                   />
               </FormControl>
               <FormControl id="NftUrl">
-                  <FormLabel>Nft Name: </FormLabel>
+                  <FormLabel>Nft Url: </FormLabel>
                   <Input placeholder='Nft Url'
                       value={nftUrl}
                       onChange={handleNftUrlChange}
@@ -121,11 +179,11 @@ export const MintNfts = () => {
                   Mint
                   </Button>
               </Stack>
-              {/* <Stack spacing={10} pt={2}>
+              <Stack spacing={10} pt={2}>
                 <Text  color='tomato'>
-                  IpfsUrl: {ipfsUrl}
+                  TxHash: {txHash}
                 </Text>
-              </Stack> */}
+              </Stack>
           </Stack>
         </Box>
       </Flex>
